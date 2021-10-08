@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A717FEC62710C56300C86428 /* CreateTaskApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A717FEC52710C56300C86428 /* CreateTaskApp.swift */; };
-		A717FEC82710C56300C86428 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A717FEC72710C56300C86428 /* ContentView.swift */; };
+		A717FEC82710C56300C86428 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A717FEC72710C56300C86428 /* HomeView.swift */; };
 		A717FECA2710C56400C86428 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A717FEC92710C56400C86428 /* Assets.xcassets */; };
 		A717FECD2710C56400C86428 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A717FECC2710C56400C86428 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		A717FEC22710C56300C86428 /* CreateTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A717FEC52710C56300C86428 /* CreateTaskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskApp.swift; sourceTree = "<group>"; };
-		A717FEC72710C56300C86428 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A717FEC72710C56300C86428 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A717FEC92710C56400C86428 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A717FECC2710C56400C86428 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A717FECE2710C56400C86428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 		A717FEC42710C56300C86428 /* CreateTask */ = {
 			isa = PBXGroup;
 			children = (
-				A717FEC72710C56300C86428 /* ContentView.swift */,
+				A717FEC72710C56300C86428 /* HomeView.swift */,
 				A717FED52710C6E700C86428 /* Resources */,
 				A717FECB2710C56400C86428 /* Preview Content */,
 			);
@@ -146,7 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A717FEC82710C56300C86428 /* ContentView.swift in Sources */,
+				A717FEC82710C56300C86428 /* HomeView.swift in Sources */,
 				A717FEC62710C56300C86428 /* CreateTaskApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
