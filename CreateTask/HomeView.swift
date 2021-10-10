@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
 	var body: some View {
-		Button("Clicky Click", action: nothing)
+		Button("Clicky Clicky", action: nothing)
 	}
 	
 	func nothing() -> Void
