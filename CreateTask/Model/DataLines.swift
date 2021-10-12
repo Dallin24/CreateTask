@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct DataLines {
+struct DataLines : Identifiable {
 	let id = UUID()
+	let time: String
 	let length: String
 }

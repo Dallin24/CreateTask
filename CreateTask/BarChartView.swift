@@ -14,9 +14,18 @@ struct BarChartView: View
 	{
 		HStack
 		{
-			VStack(alignment: .leading)
+			VStack(alignment: .trailing, spacing: 1.0)
 			{
-				ForEach(barData, id: \.id)
+				ForEach(barData)
+				{
+					data in
+					Button("Boom Boom", action: nothing)
+				}
+			}
+			
+			VStack(alignment: .leading, spacing: 1.0)
+			{
+				ForEach(barData)
 				{
 					data in
 					Text(data.length).background(Color(.blue))
@@ -25,6 +34,11 @@ struct BarChartView: View
 		}
 		
     }
+	
+	func nothing() -> Void
+	{
+		
+	}
 }
 
 struct BarChartView_Previews: PreviewProvider {
