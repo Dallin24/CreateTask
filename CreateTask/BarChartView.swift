@@ -7,21 +7,24 @@
 
 import SwiftUI
 
-struct BarChartView: View {
+struct BarChartView: View
+{
 	
-	var barData: [String] = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
-	
-    var body: some View {
-		
-		VStack {
-			Text("Test")
-		}
-    }
-	
-	func loadBarData() -> Void
+	var body: some View
 	{
+		HStack
+		{
+			VStack(alignment: .leading)
+			{
+				ForEach(barData, id: \.id)
+				{
+					data in
+					Text(data.length).background(Color(.blue))
+				}
+			}
+		}
 		
-	}
+    }
 }
 
 struct BarChartView_Previews: PreviewProvider {

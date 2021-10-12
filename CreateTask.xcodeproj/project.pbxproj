@@ -11,6 +11,8 @@
 		A717FECA2710C56400C86428 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A717FEC92710C56400C86428 /* Assets.xcassets */; };
 		A717FECD2710C56400C86428 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A717FECC2710C56400C86428 /* Preview Assets.xcassets */; };
 		A717FED92710CC0100C86428 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A717FED82710CC0100C86428 /* BarChartView.swift */; };
+		A7B2573D271611B400BBF661 /* DataLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B2573C271611B400BBF661 /* DataLines.swift */; };
+		A7B25740271611CB00BBF661 /* BarChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B2573F271611CB00BBF661 /* BarChartData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		A717FECC2710C56400C86428 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A717FECE2710C56400C86428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A717FED82710CC0100C86428 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
+		A7B2573C271611B400BBF661 /* DataLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLines.swift; sourceTree = "<group>"; };
+		A7B2573F271611CB00BBF661 /* BarChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				A717FED82710CC0100C86428 /* BarChartView.swift */,
+				A7B257362716116C00BBF661 /* Model */,
 				A717FED52710C6E700C86428 /* Resources */,
 				A717FECB2710C56400C86428 /* Preview Content */,
 			);
@@ -75,6 +80,15 @@
 				A717FECE2710C56400C86428 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A7B257362716116C00BBF661 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A7B2573C271611B400BBF661 /* DataLines.swift */,
+				A7B2573F271611CB00BBF661 /* BarChartData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,7 +160,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7B2573D271611B400BBF661 /* DataLines.swift in Sources */,
 				A717FEC62710C56300C86428 /* CreateTaskApp.swift in Sources */,
+				A7B25740271611CB00BBF661 /* BarChartData.swift in Sources */,
 				A717FED92710CC0100C86428 /* BarChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
