@@ -9,18 +9,12 @@ import SwiftUI
 
 struct BarChartView: View {
 	
-	let barData: Identifiable = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+	var barData: [String] = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
 	
     var body: some View {
 		
 		VStack {
-			ForEach(barData)
-			{
-				time in
-				
-				Text(time)
-			}
-			
+			Text("Test")
 		}
     }
 	
