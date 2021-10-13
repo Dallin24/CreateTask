@@ -14,12 +14,12 @@ struct BarChartView: View
 	{
 		HStack
 		{
-			VStack(alignment: .trailing, spacing: 1.0)
+			VStack(alignment: .leading, spacing: 1.0)
 			{
 				ForEach(barData)
 				{
 					data in
-					Button("Boom Boom", action: nothing)
+					Button(data.time, action: addCount).padding(0.0).frame(width: 50.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5)
 				}
 			}
 			
@@ -35,8 +35,16 @@ struct BarChartView: View
 		
     }
 	
-	func nothing() -> Void
+	func addCount() -> Void
 	{
+		var dataPoints : [String] = []
+		
+		for data in barData
+		{
+			
+			dataPoints.append(data.length)
+		}
+		
 		
 	}
 }

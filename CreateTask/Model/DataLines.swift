@@ -9,6 +9,7 @@ import Foundation
 
 struct DataLines : Identifiable {
 	let id = UUID()
+	let index: Int;
 	let time: String
 	let length: String
 }
