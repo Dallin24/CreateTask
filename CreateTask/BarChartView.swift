@@ -70,40 +70,43 @@ struct BarChartView: View
 		]
 	var body: some View
 	{
-		HStack
+		VStack
 		{
-			VStack(alignment: .leading, spacing: 1.0)
+			HStack
 			{
-				ForEach(0..<barTimes.count)
+				VStack(alignment: .leading, spacing: 1.0)
 				{
-					timeSlot in
-					Button(action:
+					ForEach(0..<barTimes.count)
 					{
-						changeLength(number: timeSlot)
-					}, label:
-					{
-						Text("\(barTimes[timeSlot])")
-					})
-					.padding(0.0).frame(width: 50.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5)
+						timeSlot in
+						Button(action:
+						{
+							changeLength(number: timeSlot)
+						}, label:
+						{
+							Text("\(barTimes[timeSlot])")
+						})
+						.padding(0.0).frame(width: 50.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5)
+						
+					}
+				}
+				
+				VStack(alignment: .leading, spacing: 1.0)
+				{
 					
 				}
 			}
-			
-			/*VStack(alignment: .leading, spacing: 1.0)
-			{
-				ForEach(barLengths, id: \.self)
-				{
-					length in
-					Text(length)
-					//.background(Color(.blue))
-				}
-			}*/
 		}
+		/*HStack
+		{
+			Button("Add")
+			Button("Remove", action: )
+		}*/
     }
 	
 	func changeLength(number: Int)
 	{
-		
+		barLengths[number] += 2
 	}
 }
 
