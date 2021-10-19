@@ -9,33 +9,35 @@ import SwiftUI
 
 struct BarChartView: View
 {
-	@State private var barLengths: [Int] =
+	@State private var barLengths: [String] =
 		[
-			0,
-			2,
-			4,
-			6,
-			8,
-			10,
-			12,
-			14,
-			16,
-			18,
-			20,
-			22,
-			24,
-			26,
-			28,
-			30,
-			32,
-			34,
-			36,
-			38,
-			40,
-			42,
-			44,
-			46,
-			48
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
+			"  ",
 		]
 	
 	let barTimes: [String] =
@@ -70,8 +72,9 @@ struct BarChartView: View
 		]
 	
 	@State private var buttonColor : Color = .green
-	@State private var buttonColorBool : Bool = true
+	@State private var isButtonColorGreen : Bool = true
 	@State private var buttonColorName : String = "Add"
+	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
 	
 	var body: some View
 	{
@@ -98,34 +101,44 @@ struct BarChartView: View
 				
 				VStack(alignment: .leading, spacing: 1.0)
 				{
+					ForEach(barLengths, id: \.self)
+					{
+						dataLength in
+						Text(dataLength).background(Color.blue)
+					}
 				}
 			}
-			Button("\(buttonColorName)", action: changeColor).padding(3.0).background(buttonColor).cornerRadius(5).foregroundColor(Color.black).padding()
+			Button("\(buttonColorName)", action: changeColor).padding(3.0).background(buttonColor).cornerRadius(5).foregroundColor(Color.black).padding(.top)
+			Text("\(buttonColorDescription)").foregroundColor(buttonColor)
 		}
-		/*HStack
-		{
-			Button("Add")
-			Button("Remove", action: )
-		}*/
     }
 	
 	func changeLength(number: Int)
 	{
-		barLengths[number] += 2
+		if (isButtonColorGreen == true)
+		{
+			barLengths[number] = barLengths[number] + "  "
+		} else
+		{
+			barLengths[number] = "  "
+		}
+		
 	}
 	
 	func changeColor() -> Void
 	{
-		if (buttonColorBool == true)
+		if (isButtonColorGreen == true)
 		{
 			buttonColorName = "Remove";
-			buttonColorBool = false;
+			isButtonColorGreen = false;
 			buttonColor = .red;
+			buttonColorDescription = "YOU ARE NOW REMOVING DATA"
 		} else
 		{
 			buttonColorName = "Add";
-			buttonColorBool = true;
+			isButtonColorGreen = true;
 			buttonColor = .green;
+			buttonColorDescription = "YOU ARE NOW ADDING DATA"
 		}
 	}
 }
