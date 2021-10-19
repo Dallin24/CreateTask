@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BarChartView: View
 {
-	@State public var barLengths: [Int] =
+	@State private var barLengths: [Int] =
 		[
 			0,
 			2,
@@ -68,6 +68,11 @@ struct BarChartView: View
 			"10PM",
 			"11PM",
 		]
+	
+	@State private var buttonColor : Color = .green
+	@State private var buttonColorBool : Bool = true
+	@State private var buttonColorName : String = "Add"
+	
 	var body: some View
 	{
 		VStack
@@ -93,9 +98,9 @@ struct BarChartView: View
 				
 				VStack(alignment: .leading, spacing: 1.0)
 				{
-					
 				}
 			}
+			Button("\(buttonColorName)", action: changeColor).padding(3.0).background(buttonColor).cornerRadius(5).foregroundColor(Color.black).padding()
 		}
 		/*HStack
 		{
@@ -107,6 +112,21 @@ struct BarChartView: View
 	func changeLength(number: Int)
 	{
 		barLengths[number] += 2
+	}
+	
+	func changeColor() -> Void
+	{
+		if (buttonColorBool == true)
+		{
+			buttonColorName = "Remove";
+			buttonColorBool = false;
+			buttonColor = .red;
+		} else
+		{
+			buttonColorName = "Add";
+			buttonColorBool = true;
+			buttonColor = .green;
+		}
 	}
 }
 
