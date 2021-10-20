@@ -40,7 +40,7 @@ struct BarChartView: View
 			"  ",
 		]
 	
-	let barTimes: [String] =
+	@State private var barTimes: [String] =
 		[
 			"12AM",
 			"1AM",
@@ -73,13 +73,25 @@ struct BarChartView: View
 	
 	@State private var buttonColor : Color = .green
 	@State private var isButtonColorGreen : Bool = true
+	@State private var isLabelsEditable : Bool = false
 	@State private var buttonColorName : String = "Add"
+	@State private var labelsEditableName : String = "Edit Labels"
 	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
 	
 	var body: some View
 	{
-		VStack
+		VStack(alignment: .leading)
 		{
+			HStack
+			{
+				Button(action:
+						{
+							changeButtonLabels()
+						}, label:
+						{
+							Text("\(labelsEditableName)")
+						}).padding(0.0).frame(width: 100.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+			}
 			HStack
 			{
 				VStack(alignment: .leading, spacing: 1.0)
@@ -108,46 +120,81 @@ struct BarChartView: View
 					}
 				}
 			}
-			Button("\(buttonColorName)", action: changeColor).padding(3.0).background(buttonColor).cornerRadius(5).foregroundColor(Color.black).padding(.top)
-			Text("\(buttonColorDescription)").foregroundColor(buttonColor)
+			HStack
+			{
+				VStack
+				{
+					Button("\(buttonColorName)", action: changeColor).padding(3.0).background(buttonColor).cornerRadius(5).foregroundColor(Color.black).padding(.top)
+					Text("\(buttonColorDescription)").foregroundColor(buttonColor).frame(width: 375.0)
+					
+				}
+			}
 		}
     }
 	
 	func changeLength(number: Int)
 	{
-		if (isButtonColorGreen == true)
+		if (isLabelsEditable == false)
 		{
-			barLengths[number] = barLengths[number] + "  "
-		} else
-		{
-			if let range = barLengths[number].range(of: "  ")
+			if (isButtonColorGreen == true)
 			{
-				let convertedString = barLengths[number].replacingCharacters(in: (range), with: "")
-				barLengths[number] = convertedString
-				
-				if (barLengths[number] == "")
+				barLengths[number] = barLengths[number] + "  "
+			} else
+			{
+				if let range = barLengths[number].range(of: "  ")
 				{
-					barLengths[number] = "  "
+					let convertedString = barLengths[number].replacingCharacters(in: range, with: "")
+					barLengths[number] = convertedString
+					
+					if (barLengths[number] == "")
+					{
+						barLengths[number] = "  "
+					}
 				}
 			}
+		}
+		else
+		{
+			
 		}
 		
 	}
 	
 	func changeColor() -> Void
 	{
-		if (isButtonColorGreen == true)
+		if (isLabelsEditable == false)
 		{
-			buttonColorName = "Remove";
-			isButtonColorGreen = false;
-			buttonColor = .red;
-			buttonColorDescription = "YOU ARE NOW REMOVING DATA"
-		} else
+			if (isButtonColorGreen == true)
+			{
+				buttonColorName = "Remove";
+				isButtonColorGreen = false;
+				buttonColor = .red;
+				buttonColorDescription = "YOU ARE NOW REMOVING DATA"
+			} else
+			{
+				buttonColorName = "Add";
+				isButtonColorGreen = true;
+				buttonColor = .green;
+				buttonColorDescription = "YOU ARE NOW ADDING DATA"
+			}
+			}
+		else
 		{
-			buttonColorName = "Add";
-			isButtonColorGreen = true;
-			buttonColor = .green;
-			buttonColorDescription = "YOU ARE NOW ADDING DATA"
+			
+		}
+	}
+	
+	func changeButtonLabels()
+	{
+		if (isLabelsEditable == false)
+		{
+			labelsEditableName = "Done"
+			isLabelsEditable = true
+		}
+		else
+		{
+			labelsEditableName = "Edit Labels"
+			isLabelsEditable = false
 		}
 	}
 }
