@@ -120,7 +120,16 @@ struct BarChartView: View
 			barLengths[number] = barLengths[number] + "  "
 		} else
 		{
-			barLengths[number] = "  "
+			if let range = barLengths[number].range(of: "  ")
+			{
+				let convertedString = barLengths[number].replacingCharacters(in: (range), with: "")
+				barLengths[number] = convertedString
+				
+				if (barLengths[number] == "")
+				{
+					barLengths[number] = "  "
+				}
+			}
 		}
 		
 	}
