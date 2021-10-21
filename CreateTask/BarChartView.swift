@@ -68,7 +68,7 @@ struct BarChartView: View
 			"8PM",
 			"9PM",
 			"10PM",
-			"11PM",
+			"11PM"
 		]
 	
 	@State private var buttonColor : Color = .green
@@ -78,13 +78,15 @@ struct BarChartView: View
 	@State private var labelsEditableName : String = "Edit Labels"
 	@State private var labelsOutline : Color = .clear
 	@State private var rightAppOpacity : Double = 1.0
+	@State private var labelTextEditOpacity : Double = 0.0
 	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
+	@State private var tempLabelName : String = ""
 	
 	var body: some View
 	{
 		VStack(alignment: .leading)
 		{
-			HStack
+			HStack(alignment: .top)
 			{
 				Button(action:
 						{
@@ -92,7 +94,11 @@ struct BarChartView: View
 						}, label:
 						{
 							Text("\(labelsEditableName)")
-						}).padding(0.0).frame(width: 100.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+						}).padding(0.0).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+				
+				Button("Add Row", action: addRow).padding(0.0).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+				
+				Button("Remove Row", action: remRow).padding(0.0).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
 			}
 			HStack
 			{
@@ -108,7 +114,7 @@ struct BarChartView: View
 						{
 							Text("\(barTimes[timeSlot])")
 						})
-							.padding(0.0).frame(width: 50.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
+							.padding(0.0).frame(width: 75.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
 						
 					}
 				}
@@ -131,6 +137,11 @@ struct BarChartView: View
 					
 				}
 			}.opacity(rightAppOpacity)
+			HStack
+			{
+				TextField("Enter New Label Name", text: $tempLabelName)
+					.frame(width: 375.0).padding(4).border(Color.blue, width: 2)
+			}.opacity(labelTextEditOpacity)
 		}
     }
 	
@@ -158,7 +169,14 @@ struct BarChartView: View
 		}
 		else
 		{
-			
+			if (tempLabelName == "")
+			{
+				barTimes[number] = "Label"
+			}
+			else
+			{
+				barTimes[number] = tempLabelName
+			}
 		}
 		
 	}
@@ -195,6 +213,7 @@ struct BarChartView: View
 			isLabelsEditable = true
 			labelsOutline = .blue
 			rightAppOpacity = 0.5
+			labelTextEditOpacity = 1.0
 		}
 		else
 		{
@@ -202,7 +221,21 @@ struct BarChartView: View
 			isLabelsEditable = false
 			labelsOutline = .clear
 			rightAppOpacity = 1.0
+			labelTextEditOpacity = 0.0
+			tempLabelName = ""
 		}
+	}
+	
+	func addRow() -> Void
+	{
+		barLengths.append("  ")
+		barTimes.append("Label")
+	}
+	
+	func remRow() -> Void
+	{
+		barLengths.remove(at: barLengths.count - 1)
+		barTimes.remove(at: barTimes.count - 1)
 	}
 }
 
