@@ -76,6 +76,8 @@ struct BarChartView: View
 	@State private var isLabelsEditable : Bool = false
 	@State private var buttonColorName : String = "Add"
 	@State private var labelsEditableName : String = "Edit Labels"
+	@State private var labelsOutline : Color = .clear
+	@State private var rightAppOpacity : Double = 1.0
 	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
 	
 	var body: some View
@@ -106,7 +108,7 @@ struct BarChartView: View
 						{
 							Text("\(barTimes[timeSlot])")
 						})
-						.padding(0.0).frame(width: 50.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5)
+							.padding(0.0).frame(width: 50.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
 						
 					}
 				}
@@ -118,7 +120,7 @@ struct BarChartView: View
 						dataLength in
 						Text(dataLength).background(Color.blue)
 					}
-				}
+				}.opacity(rightAppOpacity)
 			}
 			HStack
 			{
@@ -128,7 +130,7 @@ struct BarChartView: View
 					Text("\(buttonColorDescription)").foregroundColor(buttonColor).frame(width: 375.0)
 					
 				}
-			}
+			}.opacity(rightAppOpacity)
 		}
     }
 	
@@ -136,6 +138,7 @@ struct BarChartView: View
 	{
 		if (isLabelsEditable == false)
 		{
+			
 			if (isButtonColorGreen == true)
 			{
 				barLengths[number] = barLengths[number] + "  "
@@ -190,11 +193,15 @@ struct BarChartView: View
 		{
 			labelsEditableName = "Done"
 			isLabelsEditable = true
+			labelsOutline = .blue
+			rightAppOpacity = 0.5
 		}
 		else
 		{
 			labelsEditableName = "Edit Labels"
 			isLabelsEditable = false
+			labelsOutline = .clear
+			rightAppOpacity = 1.0
 		}
 	}
 }
