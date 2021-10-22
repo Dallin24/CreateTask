@@ -40,6 +40,37 @@ struct BarChartView: View
 			"  ",
 		]
 	
+	@State private var barSize: [Int] =
+		[
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+		]
+	
 	@State private var barTimes: [String] =
 		[
 			"12AM",
@@ -84,49 +115,65 @@ struct BarChartView: View
 	
 	var body: some View
 	{
-		VStack(alignment: .leading)
+		VStack
 		{
 			HStack(alignment: .top)
 			{
+				
 				Button(action:
 						{
 							changeButtonLabels()
 						}, label:
 						{
 							Text("\(labelsEditableName)")
-						}).padding(0.0).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+						}).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
 				
-				Button("Add Row", action: addRow).padding(0.0).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+				Button("Add Row", action: addRow).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
 				
-				Button("Remove Row", action: remRow).padding(0.0).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+				Button("Remove Row", action: remRow).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+			
 			}
-			HStack
+			TextField("Enter Graph Title", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+				.frame(width: 375.0)
+			ZStack
 			{
-				VStack(alignment: .leading, spacing: 1.0)
+				HStack
 				{
-					ForEach(0..<barTimes.count)
+					VStack(spacing: 1.0)
 					{
-						timeSlot in
-						Button(action:
+						ForEach(0..<barTimes.underestimatedCount)
 						{
-							changeLength(number: timeSlot)
-						}, label:
+							timeSlot in
+							Button(action:
+							{
+								changeLength(number: timeSlot)
+							}, label:
+							{
+								Text("\(barTimes[timeSlot])")
+							})
+								.padding(0.0).frame(width: 75.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
+							
+						}
+					}
+					VStack(alignment: .leading, spacing: 1.0)
 						{
-							Text("\(barTimes[timeSlot])")
-						})
-							.padding(0.0).frame(width: 75.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
+							ForEach(barLengths, id: \.self)
+							{
+								dataLength in
+								Text(dataLength).background(Color.blue)
+							}
+						}
+					
 						
-					}
-				}
-				
-				VStack(alignment: .leading, spacing: 1.0)
+				}.frame(width: 400, height: 510, alignment: .leading)
+				VStack
 				{
-					ForEach(barLengths, id: \.self)
+					ForEach(barSize, id: \.self)
 					{
-						dataLength in
-						Text(dataLength).background(Color.blue)
+						barNum in
+						Text("\(barNum)").frame(height: 21.5)
 					}
-				}.opacity(rightAppOpacity)
+				}.frame(width: 400, height: 510, alignment: .trailing)
 			}
 			HStack
 			{
@@ -153,16 +200,23 @@ struct BarChartView: View
 			if (isButtonColorGreen == true)
 			{
 				barLengths[number] = barLengths[number] + "  "
+				barSize[number] += 1
+				if (barSize[number] > 32)
+				{
+					barSize[number] = 32
+					barLengths[number] = "                                                                "
+				}
 			} else
 			{
 				if let range = barLengths[number].range(of: "  ")
 				{
 					let convertedString = barLengths[number].replacingCharacters(in: range, with: "")
 					barLengths[number] = convertedString
-					
+					barSize[number] -= 1
 					if (barLengths[number] == "")
 					{
 						barLengths[number] = "  "
+						barSize[number] = 0
 					}
 				}
 			}
@@ -212,7 +266,7 @@ struct BarChartView: View
 			labelsEditableName = "Done"
 			isLabelsEditable = true
 			labelsOutline = .blue
-			rightAppOpacity = 0.5
+			rightAppOpacity = 0.35
 			labelTextEditOpacity = 1.0
 		}
 		else
@@ -230,12 +284,14 @@ struct BarChartView: View
 	{
 		barLengths.append("  ")
 		barTimes.append("Label")
+		barSize.append(0)
 	}
 	
 	func remRow() -> Void
 	{
 		barLengths.remove(at: barLengths.count - 1)
 		barTimes.remove(at: barTimes.count - 1)
+		barSize.remove(at: barTimes.count - 1)
 	}
 }
 
