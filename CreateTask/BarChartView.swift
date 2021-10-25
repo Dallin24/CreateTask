@@ -9,35 +9,19 @@ import SwiftUI
 
 struct BarChartView: View
 {
+	struct barData: Identifiable
+	{
+		let id: Int
+		let name: String
+	}
+	
 	@State private var barLengths: [String] =
 		[
 			"  ",
 			"  ",
 			"  ",
 			"  ",
-			"  ",
-			"  ",
-			
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			"  ",
+			"  "
 		]
 	
 	@State private var barSize: [Int] =
@@ -46,60 +30,16 @@ struct BarChartView: View
 			0,
 			0,
 			0,
-			0,
-			0,
-			
-			0,
-			0,
-			0,
-			0,
-			0,
-			0,
-			
-			0,
-			0,
-			0,
-			0,
-			0,
-			0,
-			
-			0,
-			0,
-			0,
-			0,
-			0,
 			0
 		]
 	
-	@State private var barTimes: [String] =
+	@State private var barLabels: [barData] =
 		[
-			"12AM",
-			"1AM",
-			"2AM",
-			"3AM",
-			"4AM",
-			"5AM",
-			
-			"6AM",
-			"7AM",
-			"8AM",
-			"9AM",
-			"10AM",
-			"11AM",
-			
-			"12PM",
-			"1PM",
-			"2PM",
-			"3PM",
-			"4PM",
-			"5PM",
-			
-			"6PM",
-			"7PM",
-			"8PM",
-			"9PM",
-			"10PM",
-			"11PM"
+			barData(id: 0, name: "Label"),
+			barData(id: 1, name: "Label"),
+			barData(id: 2, name: "Label"),
+			barData(id: 3, name: "Label"),
+			barData(id: 4, name: "Label")
 		]
 	
 	@State private var buttonColor : Color = .green
@@ -141,18 +81,18 @@ struct BarChartView: View
 				{
 					VStack(spacing: 1.0)
 					{
-						ForEach(0..<barTimes.underestimatedCount)
+						
+						ForEach(barLabels)
 						{
-							timeSlot in
+							barLabel in
 							Button(action:
-							{
-								changeLength(number: timeSlot)
-							}, label:
-							{
-								Text("\(barTimes[timeSlot])")
-							})
+									{
+										changeLength(number: barLabel.id)
+									}, label:
+										{
+											Text("\(barLabel.name)")
+										})
 								.padding(0.0).frame(width: 75.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
-							
 						}
 					}
 					VStack(alignment: .leading, spacing: 1.0)
@@ -225,11 +165,13 @@ struct BarChartView: View
 		{
 			if (tempLabelName == "")
 			{
-				barTimes[number] = "Label"
+				//barTimes[number] = "Label"
+				barLabels[number] = barData(id: number, name: "Label")
 			}
 			else
 			{
-				barTimes[number] = tempLabelName
+				//barTimes[number] = tempLabelName
+				barLabels[number] = barData(id: number, name: "\(tempLabelName)")
 			}
 		}
 		
@@ -283,15 +225,15 @@ struct BarChartView: View
 	func addRow() -> Void
 	{
 		barLengths.append("  ")
-		barTimes.append("Label")
+		barLabels.append(barData(id: barLabels.count, name: "Label"))
 		barSize.append(0)
 	}
 	
 	func remRow() -> Void
 	{
 		barLengths.remove(at: barLengths.count - 1)
-		barTimes.remove(at: barTimes.count - 1)
-		barSize.remove(at: barTimes.count - 1)
+		barLabels.remove(at: barLabels.count - 1)
+		barSize.remove(at: barSize.count - 1)
 	}
 }
 
