@@ -42,16 +42,18 @@ struct BarChartView: View
 			barData(id: 4, name: "Label")
 		]
 	
+	@State private var buttonColorName : String = "Add"
+	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
 	@State private var buttonColor : Color = .green
 	@State private var isButtonColorGreen : Bool = true
+	
+	@State private var tempLabelName : String = ""
 	@State private var isLabelsEditable : Bool = false
-	@State private var buttonColorName : String = "Add"
 	@State private var labelsEditableName : String = "Edit Labels"
 	@State private var labelsOutline : Color = .clear
+	
 	@State private var rightAppOpacity : Double = 1.0
 	@State private var labelTextEditOpacity : Double = 0.0
-	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
-	@State private var tempLabelName : String = ""
 	
 	var body: some View
 	{
@@ -73,15 +75,14 @@ struct BarChartView: View
 				Button("Remove Row", action: remRow).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
 			
 			}
-			TextField("Enter Graph Title", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
-				.frame(width: 375.0)
+			TextField("Enter Graph Title", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/).frame(width: 375.0)
 			ZStack
 			{
 				HStack
 				{
+					
 					VStack(spacing: 1.0)
 					{
-						
 						ForEach(barLabels)
 						{
 							barLabel in
