@@ -112,7 +112,7 @@ struct BarChartView: View
 					ForEach(barSize, id: \.self)
 					{
 						barNum in
-						Text("\(barNum)").frame(height: 21.5)
+						Text("\(barNum)").frame(width: 30, height: 21.5)
 					}
 				}.frame(width: 400, height: 510, alignment: .trailing)
 			}
@@ -145,7 +145,7 @@ struct BarChartView: View
 				if (barSize[number] > 32)
 				{
 					barSize[number] = 32
-					barLengths[number] = "                                                                "
+					barLengths[number] = "                                                                  "
 				}
 			} else
 			{
