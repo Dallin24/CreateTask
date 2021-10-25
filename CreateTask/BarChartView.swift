@@ -48,6 +48,7 @@ struct BarChartView: View
 	@State private var isButtonColorGreen : Bool = true
 	
 	@State private var tempLabelName : String = ""
+	@State private var graphTitle : String = ""
 	@State private var isLabelsEditable : Bool = false
 	@State private var labelsEditableName : String = "Edit Labels"
 	@State private var labelsOutline : Color = .clear
@@ -75,7 +76,7 @@ struct BarChartView: View
 				Button("Remove Row", action: remRow).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
 			
 			}
-			TextField("Enter Graph Title", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/).frame(width: 375.0)
+			TextField("Enter Graph Title", text: $graphTitle).frame(width: 375.0)
 			ZStack
 			{
 				HStack
@@ -225,16 +226,31 @@ struct BarChartView: View
 	
 	func addRow() -> Void
 	{
+		if (barSize.count > 23)
+		{
+			
+		}
+		else
+		{
 		barLengths.append("  ")
 		barLabels.append(barData(id: barLabels.count, name: "Label"))
 		barSize.append(0)
+		}
+		
 	}
 	
 	func remRow() -> Void
 	{
+		if (barSize.count == 1)
+		{
+		
+		}
+		else
+		{
 		barLengths.remove(at: barLengths.count - 1)
 		barLabels.remove(at: barLabels.count - 1)
 		barSize.remove(at: barSize.count - 1)
+		}
 	}
 }
 
