@@ -11,14 +11,14 @@ struct BarChartView: View
 {
 	@State private var barLabels: [BarLabelNameID] =
 		[
-			BarLabelNameID(id: 0, name: "Label"),
+			BarLabelNameID(id: 0, name: "Label")/*,
 			BarLabelNameID(id: 1, name: "Label"),
 			BarLabelNameID(id: 2, name: "Label"),
 			BarLabelNameID(id: 3, name: "Label"),
-			BarLabelNameID(id: 4, name: "Label")
+			BarLabelNameID(id: 4, name: "Label")*/
 		]
-	@State private var barLengths: [String] = ["  ", "  ", "  ", "  ", "  "]
-	@State private var barSize: [Int] = [ 0, 0, 0, 0, 0 ]
+	@State private var barLengths: [String] = ["  "/*, "  ", "  ", "  ", "  "*/]
+	@State private var barSize: [Int] = [ 0/*, 0, 0, 0, 0 */]
 	
 	@State private var buttonColorName : String = "Add"
 	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
@@ -63,48 +63,55 @@ struct BarChartView: View
 			
 			}
 			
-			TextField("Enter Graph Title", text: $graphTitle)
-				.frame(width: .infinity)
-				.padding()
-			
-			HStack
+			ZStack
 			{
-				VStack(spacing: 1.0)
+				HStack
 				{
-					ForEach(barLabels)
-					{
-						barLabel in
-						Button(action: { changeLength(number: barLabel.id) }, label: { Text(barLabel.name) })
-							.frame(width: 75.0)
-							.background(Color(.systemGray3))
-							.foregroundColor(.black)
-							.cornerRadius(5)
-							.border(labelsOutline, width: 1.5)
-					}
-				}.padding(.leading, 8.0)
-				
-				ZStack(alignment: .leading)
-				{
-					VStack(alignment: .leading, spacing: 1.0)
-					{
-						ForEach(barLengths, id: \.self)
-						{
-							dataLength in
-							Text(dataLength)
-								.background(Color.blue)
-						}
-					}
-					
 					VStack(spacing: 1.0)
 					{
-						ForEach(barSize, id: \.self)
+						ForEach(barLabels)
 						{
-							barNum in
-							Text("\(barNum)")
-								.frame(width: 30, height: 20.5)
+							barLabel in
+							Button(action: { changeLength(number: barLabel.id) }, label: { Text(barLabel.name) })
+								.frame(width: 75.0)
+								.background(Color(.systemGray3))
+								.foregroundColor(.black)
+								.cornerRadius(5)
+								.border(labelsOutline, width: 1.5)
 						}
-					}.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+					}.padding(.leading, 8.0)
+					
+					ZStack(alignment: .leading)
+					{
+						VStack(alignment: .leading, spacing: 1.0)
+						{
+							ForEach(barLengths, id: \.self)
+							{
+								dataLength in
+								Text(dataLength)
+									.background(Color.blue)
+							}
+						}
+						
+						VStack(spacing: 1.0)
+						{
+							ForEach(barSize, id: \.self)
+							{
+								barNum in
+								Text("\(barNum)")
+									.frame(width: 30, height: 20.5)
+							}
+						}.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+					}
 				}
+				
+				HStack(alignment: .top)
+				{
+					TextField("Enter Graph Title", text: $graphTitle)
+						.multilineTextAlignment(.center)
+						.padding(.bottom, CGFloat(barSize.count * 90 / 2))
+				}
+				
 			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
 			
 			HStack
@@ -219,7 +226,7 @@ struct BarChartView: View
 	
 	func addRow() -> Void
 	{
-		if (barSize.count > 28)
+		if (barSize.count > 27)
 		{
 		
 		}

@@ -30,8 +30,8 @@
             filePath = "CreateTask/BarChartView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "changeLength(number:)"
             landmarkType = "7">
          </BreakpointContent>
