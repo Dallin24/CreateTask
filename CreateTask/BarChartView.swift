@@ -9,47 +9,25 @@ import SwiftUI
 
 struct BarChartView: View
 {
-	struct barData: Identifiable
-	{
-		let id: Int
-		let name: String
-	}
-	
-	@State private var barLengths: [String] =
+	@State private var barLabels: [BarLabelNameID] =
 		[
-			"  ",
-			"  ",
-			"  ",
-			"  ",
-			"  "
+			BarLabelNameID(id: 0, name: "Label"),
+			BarLabelNameID(id: 1, name: "Label"),
+			BarLabelNameID(id: 2, name: "Label"),
+			BarLabelNameID(id: 3, name: "Label"),
+			BarLabelNameID(id: 4, name: "Label")
 		]
-	
-	@State private var barSize: [Int] =
-		[
-			0,
-			0,
-			0,
-			0,
-			0
-		]
-	
-	@State private var barLabels: [barData] =
-		[
-			barData(id: 0, name: "Label"),
-			barData(id: 1, name: "Label"),
-			barData(id: 2, name: "Label"),
-			barData(id: 3, name: "Label"),
-			barData(id: 4, name: "Label")
-		]
+	@State private var barLengths: [String] = ["  ", "  ", "  ", "  ", "  "]
+	@State private var barSize: [Int] = [ 0, 0, 0, 0, 0 ]
 	
 	@State private var buttonColorName : String = "Add"
 	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
 	@State private var buttonColor : Color = .green
 	@State private var isButtonColorGreen : Bool = true
 	
-	@State private var tempLabelName : String = ""
 	@State private var graphTitle : String = ""
 	@State private var isLabelsEditable : Bool = false
+	@State private var tempLabelName : String = ""
 	@State private var labelsEditableName : String = "Edit Labels"
 	@State private var labelsOutline : Color = .clear
 	
@@ -60,13 +38,14 @@ struct BarChartView: View
 	{
 		VStack
 		{
-			HStack(alignment: .top)
+			HStack
 			{
 				
 				Button(action:
 						{
 							changeButtonLabels()
-						}, label:
+						},
+					   label:
 						{
 							Text("\(labelsEditableName)")
 						}).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
@@ -76,47 +55,45 @@ struct BarChartView: View
 				Button("Remove Row", action: remRow).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
 			
 			}
-			TextField("Enter Graph Title", text: $graphTitle).frame(width: 375.0)
-			ZStack
+			TextField("Enter Graph Title", text: $graphTitle).frame(width: .infinity).padding()
+			HStack
 			{
-				HStack
+				VStack(spacing: 1.0)
 				{
-					
+					ForEach(barLabels)
+					{
+						barLabel in
+						Button(action:
+								{
+									changeLength(number: barLabel.id)
+								},
+							   label:
+									{
+										Text("\(barLabel.name)")
+									})
+							.frame(width: 75.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
+					}
+				}.padding(.leading, 8.0)
+				ZStack(alignment: .leading)
+				{
+					VStack(alignment: .leading, spacing: 1.0)
+					{
+						ForEach(barLengths, id: \.self)
+						{
+							dataLength in
+							Text(dataLength).background(Color.blue)
+						}
+					}
 					VStack(spacing: 1.0)
 					{
-						ForEach(barLabels)
+						ForEach(barSize, id: \.self)
 						{
-							barLabel in
-							Button(action:
-									{
-										changeLength(number: barLabel.id)
-									}, label:
-										{
-											Text("\(barLabel.name)")
-										})
-								.padding(0.0).frame(width: 75.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
+							barNum in
+							Text("\(barNum)").frame(width: 30, height: 20.5)
 						}
-					}
-					VStack(alignment: .leading, spacing: 1.0)
-						{
-							ForEach(barLengths, id: \.self)
-							{
-								dataLength in
-								Text(dataLength).background(Color.blue)
-							}
-						}
-					
-						
-				}.frame(width: 400, height: 510, alignment: .leading)
-				VStack
-				{
-					ForEach(barSize, id: \.self)
-					{
-						barNum in
-						Text("\(barNum)").frame(width: 30, height: 21.5)
-					}
-				}.frame(width: 400, height: 510, alignment: .trailing)
-			}
+					}.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
+				}
+			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
 			HStack
 			{
 				VStack
@@ -143,18 +120,21 @@ struct BarChartView: View
 			{
 				barLengths[number] = barLengths[number] + "  "
 				barSize[number] += 1
+				
 				if (barSize[number] > 32)
 				{
 					barSize[number] = 32
 					barLengths[number] = "                                                                  "
 				}
-			} else
+			}
+			else
 			{
 				if let range = barLengths[number].range(of: "  ")
 				{
 					let convertedString = barLengths[number].replacingCharacters(in: range, with: "")
 					barLengths[number] = convertedString
 					barSize[number] -= 1
+					
 					if (barLengths[number] == "")
 					{
 						barLengths[number] = "  "
@@ -167,13 +147,11 @@ struct BarChartView: View
 		{
 			if (tempLabelName == "")
 			{
-				//barTimes[number] = "Label"
-				barLabels[number] = barData(id: number, name: "Label")
+				barLabels[number] = BarLabelNameID(id: number, name: "Label")
 			}
 			else
 			{
-				//barTimes[number] = tempLabelName
-				barLabels[number] = barData(id: number, name: "\(tempLabelName)")
+				barLabels[number] = BarLabelNameID(id: number, name: "\(tempLabelName)")
 			}
 		}
 		
@@ -189,14 +167,15 @@ struct BarChartView: View
 				isButtonColorGreen = false;
 				buttonColor = .red;
 				buttonColorDescription = "YOU ARE NOW REMOVING DATA"
-			} else
+			}
+			else
 			{
 				buttonColorName = "Add";
 				isButtonColorGreen = true;
 				buttonColor = .green;
 				buttonColorDescription = "YOU ARE NOW ADDING DATA"
 			}
-			}
+		}
 		else
 		{
 			
@@ -226,14 +205,14 @@ struct BarChartView: View
 	
 	func addRow() -> Void
 	{
-		if (barSize.count > 23)
+		if (barSize.count > 28)
 		{
-			
+		
 		}
 		else
 		{
 		barLengths.append("  ")
-		barLabels.append(barData(id: barLabels.count, name: "Label"))
+		barLabels.append(BarLabelNameID(id: barLabels.count, name: "Label"))
 		barSize.append(0)
 		}
 		

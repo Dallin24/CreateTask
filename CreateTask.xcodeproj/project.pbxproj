@@ -12,6 +12,7 @@
 		A717FECD2710C56400C86428 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A717FECC2710C56400C86428 /* Preview Assets.xcassets */; };
 		A717FED92710CC0100C86428 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A717FED82710CC0100C86428 /* BarChartView.swift */; };
 		A7323A2E271DF87400F1E2AF /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7323A2D271DF87400F1E2AF /* DemoView.swift */; };
+		A7FD18E627288073004AEAFC /* BarLabelNameID.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FD18E527288073004AEAFC /* BarLabelNameID.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		A717FECE2710C56400C86428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A717FED82710CC0100C86428 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		A7323A2D271DF87400F1E2AF /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
+		A7FD18E527288073004AEAFC /* BarLabelNameID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarLabelNameID.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		A717FEC42710C56300C86428 /* CreateTask */ = {
 			isa = PBXGroup;
 			children = (
+				A7FD18E427288057004AEAFC /* Model */,
 				A717FED82710CC0100C86428 /* BarChartView.swift */,
 				A7323A2D271DF87400F1E2AF /* DemoView.swift */,
 				A717FED52710C6E700C86428 /* Resources */,
@@ -78,6 +81,14 @@
 				A717FECE2710C56400C86428 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A7FD18E427288057004AEAFC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A7FD18E527288073004AEAFC /* BarLabelNameID.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +162,7 @@
 			files = (
 				A717FEC62710C56300C86428 /* CreateTaskApp.swift in Sources */,
 				A7323A2E271DF87400F1E2AF /* DemoView.swift in Sources */,
+				A7FD18E627288073004AEAFC /* BarLabelNameID.swift in Sources */,
 				A717FED92710CC0100C86428 /* BarChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
