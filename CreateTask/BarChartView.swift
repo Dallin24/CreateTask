@@ -40,22 +40,33 @@ struct BarChartView: View
 		{
 			HStack
 			{
+				Button(action: { changeButtonLabels() }, label: { Text(labelsEditableName) })
+					.frame(width: 110.0)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.cornerRadius(5)
+					.padding(.bottom)
 				
-				Button(action:
-						{
-							changeButtonLabels()
-						},
-					   label:
-						{
-							Text("\(labelsEditableName)")
-						}).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+				Button("Add Row", action: addRow)
+					.frame(width: 110.0)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.cornerRadius(5)
+					.padding(.bottom)
 				
-				Button("Add Row", action: addRow).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
-				
-				Button("Remove Row", action: remRow).frame(width: 110.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).padding(.bottom)
+				Button("Remove Row", action: remRow)
+					.frame(width: 110.0)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.cornerRadius(5)
+					.padding(.bottom)
 			
 			}
-			TextField("Enter Graph Title", text: $graphTitle).frame(width: .infinity).padding()
+			
+			TextField("Enter Graph Title", text: $graphTitle)
+				.frame(width: .infinity)
+				.padding()
+			
 			HStack
 			{
 				VStack(spacing: 1.0)
@@ -63,17 +74,15 @@ struct BarChartView: View
 					ForEach(barLabels)
 					{
 						barLabel in
-						Button(action:
-								{
-									changeLength(number: barLabel.id)
-								},
-							   label:
-									{
-										Text("\(barLabel.name)")
-									})
-							.frame(width: 75.0).background(Color(.systemGray3)).foregroundColor(.black).cornerRadius(5).border(labelsOutline, width: 1.5)
+						Button(action: { changeLength(number: barLabel.id) }, label: { Text(barLabel.name) })
+							.frame(width: 75.0)
+							.background(Color(.systemGray3))
+							.foregroundColor(.black)
+							.cornerRadius(5)
+							.border(labelsOutline, width: 1.5)
 					}
 				}.padding(.leading, 8.0)
+				
 				ZStack(alignment: .leading)
 				{
 					VStack(alignment: .leading, spacing: 1.0)
@@ -81,19 +90,23 @@ struct BarChartView: View
 						ForEach(barLengths, id: \.self)
 						{
 							dataLength in
-							Text(dataLength).background(Color.blue)
+							Text(dataLength)
+								.background(Color.blue)
 						}
 					}
+					
 					VStack(spacing: 1.0)
 					{
 						ForEach(barSize, id: \.self)
 						{
 							barNum in
-							Text("\(barNum)").frame(width: 30, height: 20.5)
+							Text("\(barNum)")
+								.frame(width: 30, height: 20.5)
 						}
 					}.frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
 				}
 			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+			
 			HStack
 			{
 				VStack
@@ -103,6 +116,7 @@ struct BarChartView: View
 					
 				}
 			}.opacity(rightAppOpacity)
+			
 			HStack
 			{
 				TextField("Enter New Label Name", text: $tempLabelName)
