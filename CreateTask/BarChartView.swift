@@ -11,14 +11,15 @@ struct BarChartView: View
 {
 	@State private var barLabels: [BarLabelNameID] =
 		[
-			BarLabelNameID(id: 0, name: "Label")/*,
+			BarLabelNameID(id: 0, name: "Label"),
 			BarLabelNameID(id: 1, name: "Label"),
 			BarLabelNameID(id: 2, name: "Label"),
 			BarLabelNameID(id: 3, name: "Label"),
-			BarLabelNameID(id: 4, name: "Label")*/
+			BarLabelNameID(id: 4, name: "Label")
 		]
-	@State private var barLengths: [String] = ["  "/*, "  ", "  ", "  ", "  "*/]
-	@State private var barSize: [Int] = [ 0/*, 0, 0, 0, 0 */]
+	@State private var barLengths: [String] = ["  ", "  ", "  ", "  ", "  "]
+	@State private var barSize: [Int] = [ 0, 0, 0, 0, 0 ]
+	@State private var dataLength: CGFloat = 5.0
 	
 	@State private var buttonColorName : String = "Add"
 	@State private var buttonColorDescription : String = "YOU ARE NOW ADDING DATA"
@@ -109,7 +110,7 @@ struct BarChartView: View
 				{
 					TextField("Enter Graph Title", text: $graphTitle)
 						.multilineTextAlignment(.center)
-						.padding(.bottom, CGFloat(barSize.count * 90 / 2))
+						.padding(.bottom, (dataLength * 40) / 1.8 - (dataLength * 0.85) + 20)
 				}
 				
 			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
@@ -141,6 +142,7 @@ struct BarChartView: View
 			{
 				barLengths[number] = barLengths[number] + "  "
 				barSize[number] += 1
+				
 				
 				if (barSize[number] > 32)
 				{
@@ -235,6 +237,7 @@ struct BarChartView: View
 		barLengths.append("  ")
 		barLabels.append(BarLabelNameID(id: barLabels.count, name: "Label"))
 		barSize.append(0)
+		dataLength = CGFloat(barSize.count)
 		}
 		
 	}
@@ -250,6 +253,7 @@ struct BarChartView: View
 		barLengths.remove(at: barLengths.count - 1)
 		barLabels.remove(at: barLabels.count - 1)
 		barSize.remove(at: barSize.count - 1)
+		dataLength = CGFloat(barSize.count)
 		}
 	}
 }
