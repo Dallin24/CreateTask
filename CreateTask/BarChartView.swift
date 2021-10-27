@@ -106,6 +106,7 @@ struct BarChartView: View
 					}
 				}
 				
+				
 				HStack(alignment: .top)
 				{
 					TextField("Enter Graph Title", text: $graphTitle)
@@ -114,7 +115,6 @@ struct BarChartView: View
 				}
 				
 			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
-			
 			HStack
 			{
 				VStack
@@ -228,7 +228,7 @@ struct BarChartView: View
 	
 	func addRow() -> Void
 	{
-		if (barSize.count > 27)
+		if (dataLength > 27)
 		{
 		
 		}
@@ -244,7 +244,7 @@ struct BarChartView: View
 	
 	func remRow() -> Void
 	{
-		if (barSize.count == 1)
+		if (dataLength == 1)
 		{
 		
 		}
