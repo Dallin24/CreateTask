@@ -28,6 +28,22 @@ struct SortingAlgorithimsView: View
 	{
 		VStack
 		{
+			HStack(spacing: 2.0)
+			{
+				Button(action: { changeBarDataInfo(id: -1, action: "addBar") }, label: { Image(systemName: "plus") })
+					.frame(width: 20.0, height: 20)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.cornerRadius(5)
+					.padding(.leading, 10.0)
+				
+				Button(action: { changeBarDataInfo(id: -1, action: "removeBar") }, label: { Image(systemName: "minus") })
+					.frame(width: 20.0, height: 20)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.cornerRadius(5)
+				
+			}.frame(maxWidth: .infinity, alignment: .leading)
 			HStack
 			{
 				VStack(alignment: .leading, spacing: 3.0)
@@ -37,14 +53,14 @@ struct SortingAlgorithimsView: View
 						dataline in
 						HStack(spacing: 2.0)
 						{
-							Button(action: { changeBarDataInfo(id: dataline.id, action: "add") }, label: { Image(systemName: "plus") })
+							Button(action: { changeBarDataInfo(id: dataline.id, action: "addData") }, label: { Image(systemName: "plus") })
 								.frame(width: 20.0, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
 								.cornerRadius(5)
 								.padding(.leading, 10.0)
 							
-							Button(action: { changeBarDataInfo(id: dataline.id, action: "remove") }, label: { Image(systemName: "minus") })
+							Button(action: { changeBarDataInfo(id: dataline.id, action: "removeData") }, label: { Image(systemName: "minus") })
 								.frame(width: 20.0, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
@@ -80,12 +96,12 @@ struct SortingAlgorithimsView: View
 	
 	func changeBarDataInfo(id : Int, action : String) -> Void
 	{
-		if (action == "add")
+		if (action == "addData")
 		{
 			barData[id].sizeVisual += "  "
 			barData[id].sizeNumerical += 1
 		}
-		else if (action == "remove")
+		else if (action == "removeData")
 		{
 			if let range = barData[id].sizeVisual.range(of: "  ")
 			{
@@ -102,6 +118,14 @@ struct SortingAlgorithimsView: View
 				barData[id].sizeNumerical -= 1
 				}
 			}
+		}
+		else if (action == "addBar")
+		{
+			barData.append(BarDataInfo(id: (barData.count), sizeVisual: "  ", sizeNumerical: 0))
+		}
+		else if (action == "removeBar" && barData.count > 1)
+		{
+			barData.remove(at: barData.count - 1)
 		}
 	}
 }
