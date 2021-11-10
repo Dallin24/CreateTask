@@ -10,18 +10,17 @@ import SwiftUI
 struct SortingAlgorithimsView: View
 {
 	
-	struct BarDataInfo: Identifiable
+	struct BarDataInfo
 	{
-		let id: Int
 		var sizeVisual: String
 		var sizeNumerical: Int
 	}
 	
 	@State private var barData: [BarDataInfo] =
 	[
-		BarDataInfo(id: 0, sizeVisual: "  ", sizeNumerical: 0),
-		BarDataInfo(id: 1, sizeVisual: "  ", sizeNumerical: 0),
-		BarDataInfo(id: 2, sizeVisual: "  ", sizeNumerical: 0)
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0),
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0),
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0)
 	]
 	
     var body: some View
@@ -48,19 +47,19 @@ struct SortingAlgorithimsView: View
 			{
 				VStack(alignment: .leading, spacing: 3.0)
 				{
-					ForEach(barData)
+					ForEach(barData.indices, id: \.self)
 					{
-						dataline in
+						index in
 						HStack(spacing: 2.0)
 						{
-							Button(action: { changeBarDataInfo(id: dataline.id, action: "addData") }, label: { Image(systemName: "plus") })
+							Button(action: { changeBarDataInfo(id: index, action: "addData") }, label: { Image(systemName: "plus") })
 								.frame(width: 20.0, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
 								.cornerRadius(5)
 								.padding(.leading, 10.0)
 							
-							Button(action: { changeBarDataInfo(id: dataline.id, action: "removeData") }, label: { Image(systemName: "minus") })
+							Button(action: { changeBarDataInfo(id: index, action: "removeData") }, label: { Image(systemName: "minus") })
 								.frame(width: 20.0, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
@@ -71,10 +70,10 @@ struct SortingAlgorithimsView: View
 				
 				VStack(alignment: .leading, spacing: 3.0)
 				{
-					ForEach(barData)
+					ForEach(barData.indices, id: \.self)
 					{
-						dataline in
-						Text(dataline.sizeVisual)
+						index in
+						Text(barData[index].sizeVisual)
 							.frame(height: 20)
 							.background(Color(.blue))
 					}
@@ -82,10 +81,10 @@ struct SortingAlgorithimsView: View
 				
 				VStack(spacing: 3.0)
 				{
-					ForEach(barData)
+					ForEach(barData.indices, id: \.self)
 					{
-						dataline in
-						Text(String(dataline.sizeNumerical))
+						index in
+						Text(String(barData[index].sizeNumerical))
 							.frame(height: 20)
 							.padding(.trailing, 10.0)
 					}
@@ -121,7 +120,7 @@ struct SortingAlgorithimsView: View
 		}
 		else if (action == "addBar")
 		{
-			barData.append(BarDataInfo(id: (barData.count), sizeVisual: "  ", sizeNumerical: 0))
+			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0))
 		}
 		else if (action == "removeBar" && barData.count > 1)
 		{
