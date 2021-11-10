@@ -13,8 +13,8 @@ struct SortingAlgorithimsView: View
 	struct BarDataInfo: Identifiable
 	{
 		let id: Int
-		let sizeVisual: String
-		let sizeNumerical: Int
+		var sizeVisual: String
+		var sizeNumerical: Int
 	}
 	
 	@State private var barData: [BarDataInfo] =
@@ -34,13 +34,22 @@ struct SortingAlgorithimsView: View
 				{
 					ForEach(barData)
 					{
-						buttonDataline in
-						Button(action: { changeBarDataInfo() }, label: { Image(systemName: "plus") })
-							.frame(width: 25.0, height: 20)
-							.background(Color(.systemGray3))
-							.foregroundColor(.black)
-							.cornerRadius(5)
-							.padding(.leading)
+						dataline in
+						HStack(spacing: 2.0)
+						{
+							Button(action: { changeBarDataInfo(id: dataline.id, action: "add") }, label: { Image(systemName: "plus") })
+								.frame(width: 20.0, height: 20)
+								.background(Color(.systemGray3))
+								.foregroundColor(.black)
+								.cornerRadius(5)
+								.padding(.leading, 10.0)
+							
+							Button(action: { changeBarDataInfo(id: dataline.id, action: "remove") }, label: { Image(systemName: "minus") })
+								.frame(width: 20.0, height: 20)
+								.background(Color(.systemGray3))
+								.foregroundColor(.black)
+								.cornerRadius(5)
+						}
 					}
 				}
 				
@@ -48,8 +57,8 @@ struct SortingAlgorithimsView: View
 				{
 					ForEach(barData)
 					{
-						visualDataLine in
-						Text(visualDataLine.sizeVisual)
+						dataline in
+						Text(dataline.sizeVisual)
 							.frame(height: 20)
 							.background(Color(.blue))
 					}
@@ -59,19 +68,41 @@ struct SortingAlgorithimsView: View
 				{
 					ForEach(barData)
 					{
-						numericalDataLine in
-						Text(String(numericalDataLine.sizeNumerical))
+						dataline in
+						Text(String(dataline.sizeNumerical))
 							.frame(height: 20)
-							.padding(.trailing)
+							.padding(.trailing, 10.0)
 					}
-				}
+				}.frame(width: 35.0, alignment: .center)
 			}
 		}
     }
 	
-	func changeBarDataInfo() -> Void
+	func changeBarDataInfo(id : Int, action : String) -> Void
 	{
-		
+		if (action == "add")
+		{
+			barData[id].sizeVisual += "  "
+			barData[id].sizeNumerical += 1
+		}
+		else if (action == "remove")
+		{
+			if let range = barData[id].sizeVisual.range(of: "  ")
+			{
+				let convertedString = barData[id].sizeVisual.replacingCharacters(in: range, with: "")
+				
+				if (convertedString == "")
+				{
+				barData[id].sizeVisual = "  "
+				barData[id].sizeNumerical = 0
+				}
+				else
+				{
+				barData[id].sizeVisual = convertedString
+				barData[id].sizeNumerical -= 1
+				}
+			}
+		}
 	}
 }
 
