@@ -16,7 +16,7 @@ struct SortingAlgorithimsView: View
 		var sizeNumerical: Int
 	}
 	
-	@State private var barData: [BarDataInfo] =
+	@State private var barData : [BarDataInfo] =
 	[
 		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0),
 		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0),
@@ -30,19 +30,21 @@ struct SortingAlgorithimsView: View
 			HStack(spacing: 2.0)
 			{
 				Button(action: { changeBarDataInfo(id: -1, action: "addBar") }, label: { Image(systemName: "plus") })
-					.frame(width: 20.0, height: 20)
+					.frame(width: 25, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
+					.font(.system(size: 22.0))
 					.cornerRadius(5)
 					.padding(.leading, 10.0)
 				
 				Button(action: { changeBarDataInfo(id: -1, action: "removeBar") }, label: { Image(systemName: "minus") })
-					.frame(width: 20.0, height: 20)
+					.frame(width: 25, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
+					.font(.system(size: 22.0))
 					.cornerRadius(5)
 				
-			}.frame(maxWidth: .infinity, alignment: .leading)
+			}.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 			HStack
 			{
 				VStack(alignment: .leading, spacing: 3.0)
@@ -53,14 +55,14 @@ struct SortingAlgorithimsView: View
 						HStack(spacing: 2.0)
 						{
 							Button(action: { changeBarDataInfo(id: index, action: "addData") }, label: { Image(systemName: "plus") })
-								.frame(width: 20.0, height: 20)
+								.frame(width: 20, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
 								.cornerRadius(5)
 								.padding(.leading, 10.0)
 							
 							Button(action: { changeBarDataInfo(id: index, action: "removeData") }, label: { Image(systemName: "minus") })
-								.frame(width: 20.0, height: 20)
+								.frame(width: 20, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
 								.cornerRadius(5)
@@ -89,7 +91,7 @@ struct SortingAlgorithimsView: View
 							.padding(.trailing, 10.0)
 					}
 				}.frame(width: 35.0, alignment: .center)
-			}
+			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 		}
     }
 	
