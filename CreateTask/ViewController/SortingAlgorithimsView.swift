@@ -32,7 +32,7 @@ struct SortingAlgorithimsView: View
 		{
 			HStack(spacing: 2.0)
 			{
-				Button(action: { sortBarData(action: "bubbleSort") }, label: { Text("Bubble Sort") })
+				Button(action: { bubbleSort() }, label: { Text("Bubble Sort") })
 					.frame(width: 105, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -58,8 +58,16 @@ struct SortingAlgorithimsView: View
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
 					.opacity(buttonOpacity)
+				Button(action: { changeBarDataInfo(id: -1, action: "random") }, label: { Text("Generate Random Data") })
+					.frame(width: 200, height: 25)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.font(.system(size: 18.0))
+					.cornerRadius(5)
+					.opacity(buttonOpacity)
 				
 			}.frame(minWidth: 0, maxWidth: .infinity)
+			
 			HStack
 			{
 				VStack(alignment: .leading, spacing: 3.0)
@@ -105,7 +113,7 @@ struct SortingAlgorithimsView: View
 						index in
 						Text(String(barData[index].sizeNumerical))
 							.frame(height: 20)
-							.padding(.trailing, 10.0)
+							.padding(.trailing, 5.0)
 					}
 				}.frame(width: 35.0, alignment: .center)
 			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -147,12 +155,51 @@ struct SortingAlgorithimsView: View
 		{
 			barData.remove(at: barData.count - 1)
 		}
+		else if (action == "random")
+		{
+			for index in 0...(barData.count - 1)
+			{
+				barData[index].sizeNumerical = Int.random(in: 0..<31)
+			}
+			updateSizeVisual()
+		}
 	}
 	
-	func sortBarData(action : String) -> Void
+	func updateSizeVisual() -> Void
+	{
+		for index in 0...(barData.count - 1)
+		{
+			barData[index].sizeVisual = "  "
+			
+			var adder = 0
+			while (adder < barData[index].sizeNumerical)
+			{
+			barData[index].sizeVisual += "  "
+			adder += 1
+			}
+		}
+	}
+	
+	func bubbleSort() -> Void
 	{
 		freezeButtons = true
 		buttonOpacity = 0.5
+		
+		for _ in barData
+		{
+			var index : Int = 0
+			while (index < barData.count - 1)
+			{
+				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
+				{
+					let temp = barData[index]
+					barData[index] = barData[index + 1]
+					barData[index + 1] = temp
+				}
+				
+				index += 1
+			}
+		}
 	}
 }
 
