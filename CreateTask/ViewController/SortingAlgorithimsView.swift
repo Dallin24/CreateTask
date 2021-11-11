@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SortingAlgorithimsView: View
 {
-	
 	struct BarDataInfo
 	{
 		var sizeVisual : String
@@ -157,6 +156,15 @@ struct SortingAlgorithimsView: View
 		}
 		else if (action == "random")
 		{
+			barData.removeAll()
+			let randomRowCount = Int.random(in: 5..<25)
+			var counter = 0
+			while (counter < randomRowCount)
+			{
+				barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue))
+				counter += 1
+			}
+			
 			for index in 0...(barData.count - 1)
 			{
 				barData[index].sizeNumerical = Int.random(in: 0..<31)
@@ -171,13 +179,17 @@ struct SortingAlgorithimsView: View
 		{
 			barData[index].sizeVisual = "  "
 			
-			var adder = 0
-			while (adder < barData[index].sizeNumerical)
+			var segments = 0
+			while (segments < barData[index].sizeNumerical)
 			{
 			barData[index].sizeVisual += "  "
-			adder += 1
+			segments += 1
 			}
 		}
+	}
+	func pause(time: UInt32) -> Void
+	{
+		sleep(time)
 	}
 	
 	func bubbleSort() -> Void
@@ -192,6 +204,7 @@ struct SortingAlgorithimsView: View
 			{
 				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
 				{
+					pause(time: 5)
 					let temp = barData[index]
 					barData[index] = barData[index + 1]
 					barData[index + 1] = temp
@@ -200,6 +213,9 @@ struct SortingAlgorithimsView: View
 				index += 1
 			}
 		}
+		
+		freezeButtons = false
+		buttonOpacity = 1.0
 	}
 }
 
