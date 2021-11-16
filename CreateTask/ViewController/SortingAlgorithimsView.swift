@@ -187,10 +187,6 @@ struct SortingAlgorithimsView: View
 			}
 		}
 	}
-	func pause(time: UInt32) -> Void
-	{
-		sleep(time)
-	}
 	
 	func bubbleSort() -> Void
 	{
@@ -200,22 +196,32 @@ struct SortingAlgorithimsView: View
 		for _ in barData
 		{
 			var index : Int = 0
-			while (index < barData.count - 1)
+			while (index < barData.count - 2)
 			{
 				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
 				{
-					pause(time: 5)
-					let temp = barData[index]
-					barData[index] = barData[index + 1]
-					barData[index + 1] = temp
+					DispatchQueue.main.sync
+					{
+						let temp = barData[index]
+						barData[index] = barData[index + 1]
+						barData[index + 1] = temp
+					}
+					//sleep(1)
 				}
-				
 				index += 1
 			}
 		}
 		
 		freezeButtons = false
 		buttonOpacity = 1.0
+	}
+	
+	func test() -> Void
+	{
+		barData[0].color = .orange
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			barData[0].color = .green
+		}
 	}
 }
 
