@@ -9,12 +9,6 @@ import SwiftUI
 
 struct SortingAlgorithimsView: View
 {
-	struct BarDataInfo
-	{
-		var sizeVisual : String
-		var sizeNumerical : Int
-		var color : Color
-	}
 	
 	@State private var barData : [BarDataInfo] =
 	[
@@ -57,7 +51,7 @@ struct SortingAlgorithimsView: View
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
 					.opacity(buttonOpacity)
-				Button(action: { changeBarDataInfo(id: -1, action: "random") }, label: { Text("Generate Random Data") })
+				Button(action: { changeBarDataInfo(id: -1, action: "randomData") }, label: { Text("Generate Random Data") })
 					.frame(width: 200, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -76,7 +70,7 @@ struct SortingAlgorithimsView: View
 						index in
 						HStack(spacing: 2.0)
 						{
-							Button(action: { changeBarDataInfo(id: index, action: "addData") }, label: { Image(systemName: "plus") })
+							Button(action: { changeBarDataInfo(id: index, action: "addDataPoint") }, label: { Image(systemName: "plus") })
 								.frame(width: 20, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
@@ -84,7 +78,7 @@ struct SortingAlgorithimsView: View
 								.padding(.leading, 10.0)
 								.opacity(buttonOpacity)
 							
-							Button(action: { changeBarDataInfo(id: index, action: "removeData") }, label: { Image(systemName: "minus") })
+							Button(action: { changeBarDataInfo(id: index, action: "removeDataPoint") }, label: { Image(systemName: "minus") })
 								.frame(width: 20, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
@@ -123,12 +117,12 @@ struct SortingAlgorithimsView: View
 	{
 		if freezeButtons { return }
 		
-		if (action == "addData")
+		if (action == "addDataPoint")
 		{
 			barData[id].sizeVisual += "  "
 			barData[id].sizeNumerical += 1
 		}
-		else if (action == "removeData")
+		else if (action == "removeDataPoint")
 		{
 			if let range = barData[id].sizeVisual.range(of: "  ")
 			{
@@ -154,7 +148,7 @@ struct SortingAlgorithimsView: View
 		{
 			barData.remove(at: barData.count - 1)
 		}
-		else if (action == "random")
+		else if (action == "randomData")
 		{
 			barData.removeAll()
 			let randomRowCount = Int.random(in: 5..<25)
@@ -196,16 +190,16 @@ struct SortingAlgorithimsView: View
 		for _ in barData
 		{
 			var index : Int = 0
-			while (index < barData.count - 2)
+			while (index < barData.count - 1)
 			{
 				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
 				{
-					DispatchQueue.main.sync
-					{
+					//DispatchQueue.main.async
+					//{
 						let temp = barData[index]
 						barData[index] = barData[index + 1]
 						barData[index + 1] = temp
-					}
+					//}
 					//sleep(1)
 				}
 				index += 1

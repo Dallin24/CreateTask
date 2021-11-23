@@ -9,6 +9,13 @@ import SwiftUI
 
 struct BarChartView: View
 {
+	
+	struct BarLabelNameID: Identifiable
+	{
+		let id: Int
+		let name: String
+	}
+	
 	@State private var barLabels: [BarLabelNameID] =
 		[
 			BarLabelNameID(id: 0, name: "Label"),
