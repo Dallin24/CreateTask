@@ -194,13 +194,22 @@ struct SortingAlgorithimsView: View
 			{
 				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
 				{
-					//DispatchQueue.main.async
-					//{
+					//let temp = barData[index]
+					//barData[index] = barData[index + 1]
+					//barData[index + 1] = temp
+					
+					let group = DispatchGroup()
+					group.enter()
+					
+					DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 1)
+					{
 						let temp = barData[index]
 						barData[index] = barData[index + 1]
 						barData[index + 1] = temp
-					//}
-					//sleep(1)
+						group.leave()
+					}
+					
+					group.wait()
 				}
 				index += 1
 			}

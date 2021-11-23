@@ -1,5 +1,5 @@
 //
-//  BarDataInfo.swift
+//  $BarDataInfo.swift
 //  CreateTask
 //
 //  Created by Gibbs, Dallin on 11/23/21.
