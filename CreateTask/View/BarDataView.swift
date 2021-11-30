@@ -1,20 +1,29 @@
 //
-//  SortingAlgorithimsView.swift
+//  BarDataView.swift
 //  CreateTask
 //
 //  Created by [REDACTED] on 11/9/21.
 //
 
 import SwiftUI
+//import UIKit
+
+struct BarDataInfo
+{
+	var sizeVisual : String
+	var sizeNumerical : Int
+	var color : Color
+	var sorted : Bool
+}
 
 struct BarDataView: View
 {
 	
 	@State private var barData : [BarDataInfo] =
 	[
-		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue),
-		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue),
-		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue)
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false),
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false),
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false)
 	]
 	@State private var freezeButtons : Bool = false
 	@State private var buttonOpacity : Double = 1.0
@@ -142,7 +151,7 @@ struct BarDataView: View
 		}
 		else if (action == "addBar")
 		{
-			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue))
+			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false))
 		}
 		else if (action == "removeBar" && barData.count > 1)
 		{
@@ -155,7 +164,7 @@ struct BarDataView: View
 			var counter = 0
 			while (counter < randomRowCount)
 			{
-				barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue))
+				barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false))
 				counter += 1
 			}
 			
@@ -189,8 +198,7 @@ struct BarDataView: View
 		
 		for _ in barData
 		{
-			var index : Int = 0
-			while (index < barData.count - 1)
+			for index in 0..<(barData.count - 1)
 			{
 				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
 				{
@@ -198,25 +206,15 @@ struct BarDataView: View
 					barData[index] = barData[index + 1]
 					barData[index + 1] = temp
 				}
-				index += 1
+				
+				RunLoop.current.run(until: Date())
 			}
+			//RunLoop.current.run(until: Date() + 0.20)
 		}
 		
 		freezeButtons = false
 		buttonOpacity = 1.0
 	}
-	
-	func animateBarData(id : Int, action : String) -> Void
-	{
-		
-	}
-}
-
-struct BarDataInfo
-{
-	var sizeVisual : String
-	var sizeNumerical : Int
-	var color : Color
 }
 
 struct BarDataView_Previews: PreviewProvider
