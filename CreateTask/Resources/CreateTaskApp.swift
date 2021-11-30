@@ -11,7 +11,7 @@ import SwiftUI
 struct CreateTaskApp: App {
     var body: some Scene {
         WindowGroup {
-            SortingAlgorithimsView()
+            BarDataView()
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SortingAlgorithimsView: View
+struct BarDataView: View
 {
 	
 	@State private var barData : [BarDataInfo] =
@@ -25,8 +25,8 @@ struct SortingAlgorithimsView: View
 		{
 			HStack(spacing: 2.0)
 			{
-				Button(action: { bubbleSort() }, label: { Text("Bubble Sort") })
-					.frame(width: 105, height: 25)
+				Button(action: { sortData() }, label: { Text("Sort Data") })
+					.frame(width: 90, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
 					.font(.system(size: 18.0))
@@ -182,7 +182,7 @@ struct SortingAlgorithimsView: View
 		}
 	}
 	
-	func bubbleSort() -> Void
+	func sortData() -> Void
 	{
 		freezeButtons = true
 		buttonOpacity = 0.5
@@ -205,20 +205,19 @@ struct SortingAlgorithimsView: View
 		freezeButtons = false
 		buttonOpacity = 1.0
 	}
-	
-	func test() -> Void
-	{
-		barData[0].color = .orange
-		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-			barData[0].color = .green
-		}
-	}
 }
 
-struct SortingAlgorithimsView_Previews: PreviewProvider
+struct BarDataInfo
+{
+	var sizeVisual : String
+	var sizeNumerical : Int
+	var color : Color
+}
+
+struct BarDataView_Previews: PreviewProvider
 {
     static var previews: some View
 	{
-        SortingAlgorithimsView()
+        BarDataView()
     }
 }
