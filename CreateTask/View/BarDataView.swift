@@ -2,7 +2,7 @@
 //  SortingAlgorithimsView.swift
 //  CreateTask
 //
-//  Created by Gibbs, Dallin on 11/9/21.
+//  Created by [REDACTED] on 11/9/21.
 //
 
 import SwiftUI
@@ -204,6 +204,11 @@ struct BarDataView: View
 		
 		freezeButtons = false
 		buttonOpacity = 1.0
+	}
+	
+	func animateBarData(id : Int, action : String) -> Void
+	{
+		
 	}
 }
 

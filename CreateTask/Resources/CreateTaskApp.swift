@@ -2,7 +2,7 @@
 //  CreateTaskApp.swift
 //  CreateTask
 //
-//  Created by Gibbs, Dallin on 10/8/21.
+//  Created by [REDACTED] on 10/8/21.
 //
 
 import SwiftUI
