@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//import UIKit
 
 struct BarDataInfo
 {
@@ -18,7 +17,6 @@ struct BarDataInfo
 
 struct BarDataView: View
 {
-	
 	@State private var barData : [BarDataInfo] =
 	[
 		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false),
@@ -30,6 +28,7 @@ struct BarDataView: View
 	
     var body: some View
 	{
+
 		VStack
 		{
 			HStack(spacing: 2.0)
@@ -44,7 +43,7 @@ struct BarDataView: View
 			
 			HStack(spacing: 2.0)
 			{
-				Button(action: { changeBarDataInfo(id: -1, action: "addBar") }, label: { Image(systemName: "plus") })
+				Button(action: { changeBarDataInfo(id: -1, operation: "addBar") }, label: { Image(systemName: "plus") })
 					.frame(width: 25, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -53,14 +52,14 @@ struct BarDataView: View
 					.padding(.leading, 10.0)
 					.opacity(buttonOpacity)
 				
-				Button(action: { changeBarDataInfo(id: -1, action: "removeBar") }, label: { Image(systemName: "minus") })
+				Button(action: { changeBarDataInfo(id: -1, operation: "removeBar") }, label: { Image(systemName: "minus") })
 					.frame(width: 25, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
 					.opacity(buttonOpacity)
-				Button(action: { changeBarDataInfo(id: -1, action: "randomData") }, label: { Text("Generate Random Data") })
+				Button(action: { changeBarDataInfo(id: -1, operation: "randomData") }, label: { Text("Generate Random Data") })
 					.frame(width: 200, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -79,7 +78,7 @@ struct BarDataView: View
 						index in
 						HStack(spacing: 2.0)
 						{
-							Button(action: { changeBarDataInfo(id: index, action: "addDataPoint") }, label: { Image(systemName: "plus") })
+							Button(action: { changeBarDataInfo(id: index, operation: "addDataPoint") }, label: { Image(systemName: "plus") })
 								.frame(width: 20, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
@@ -87,7 +86,7 @@ struct BarDataView: View
 								.padding(.leading, 10.0)
 								.opacity(buttonOpacity)
 							
-							Button(action: { changeBarDataInfo(id: index, action: "removeDataPoint") }, label: { Image(systemName: "minus") })
+							Button(action: { changeBarDataInfo(id: index, operation: "removeDataPoint") }, label: { Image(systemName: "minus") })
 								.frame(width: 20, height: 20)
 								.background(Color(.systemGray3))
 								.foregroundColor(.black)
@@ -122,16 +121,16 @@ struct BarDataView: View
 		}
     }
 	
-	func changeBarDataInfo(id : Int, action : String) -> Void
+	func changeBarDataInfo(id : Int, operation : String) -> Void
 	{
 		if freezeButtons { return }
 		
-		if (action == "addDataPoint")
+		if (operation == "addDataPoint")
 		{
 			barData[id].sizeVisual += "  "
 			barData[id].sizeNumerical += 1
 		}
-		else if (action == "removeDataPoint")
+		else if (operation == "removeDataPoint")
 		{
 			if let range = barData[id].sizeVisual.range(of: "  ")
 			{
@@ -149,15 +148,15 @@ struct BarDataView: View
 				}
 			}
 		}
-		else if (action == "addBar")
+		else if (operation == "addBar")
 		{
 			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false))
 		}
-		else if (action == "removeBar" && barData.count > 1)
+		else if (operation == "removeBar" && barData.count > 1)
 		{
 			barData.remove(at: barData.count - 1)
 		}
-		else if (action == "randomData")
+		else if (operation == "randomData")
 		{
 			barData.removeAll()
 			let randomRowCount = Int.random(in: 5..<25)
@@ -193,12 +192,11 @@ struct BarDataView: View
 	
 	func sortData() -> Void
 	{
-		freezeButtons = true
-		buttonOpacity = 0.5
-		
+		var end = 0
 		for _ in barData
 		{
-			for index in 0..<(barData.count - 1)
+			
+			for index in 0..<(barData.count - 1 - end)
 			{
 				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
 				{
@@ -206,14 +204,10 @@ struct BarDataView: View
 					barData[index] = barData[index + 1]
 					barData[index + 1] = temp
 				}
-				
-				RunLoop.current.run(until: Date())
 			}
-			//RunLoop.current.run(until: Date() + 0.20)
+			end += 1
+			
 		}
-		
-		freezeButtons = false
-		buttonOpacity = 1.0
 	}
 }
 
