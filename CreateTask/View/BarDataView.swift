@@ -68,56 +68,55 @@ struct BarDataView: View
 					.opacity(buttonOpacity)
 				
 			}.frame(minWidth: 0, maxWidth: .infinity)
-			
-			HStack
-			{
-				VStack(alignment: .leading, spacing: 3.0)
+				HStack
 				{
-					ForEach(barData.indices, id: \.self)
+					VStack(alignment: .leading, spacing: 3.0)
 					{
-						index in
-						HStack(spacing: 2.0)
+						ForEach(barData.indices, id: \.self)
 						{
-							Button(action: { changeBarDataInfo(id: index, operation: "addDataPoint") }, label: { Image(systemName: "plus") })
-								.frame(width: 20, height: 20)
-								.background(Color(.systemGray3))
-								.foregroundColor(.black)
-								.cornerRadius(5)
-								.padding(.leading, 10.0)
-								.opacity(buttonOpacity)
-							
-							Button(action: { changeBarDataInfo(id: index, operation: "removeDataPoint") }, label: { Image(systemName: "minus") })
-								.frame(width: 20, height: 20)
-								.background(Color(.systemGray3))
-								.foregroundColor(.black)
-								.cornerRadius(5)
-								.opacity(buttonOpacity)
+							index in
+							HStack(spacing: 2.0)
+							{
+								Button(action: { changeBarDataInfo(id: index, operation: "addDataPoint") }, label: { Image(systemName: "plus") })
+									.frame(width: 20, height: 20)
+									.background(Color(.systemGray3))
+									.foregroundColor(.black)
+									.cornerRadius(5)
+									.padding(.leading, 10.0)
+									.opacity(buttonOpacity)
+								
+								Button(action: { changeBarDataInfo(id: index, operation: "removeDataPoint") }, label: { Image(systemName: "minus") })
+									.frame(width: 20, height: 20)
+									.background(Color(.systemGray3))
+									.foregroundColor(.black)
+									.cornerRadius(5)
+									.opacity(buttonOpacity)
+							}
 						}
 					}
-				}
-				
-				VStack(alignment: .leading, spacing: 3.0)
-				{
-					ForEach(barData.indices, id: \.self)
+					
+					VStack(alignment: .leading, spacing: 3.0)
 					{
-						index in
-						Text(barData[index].sizeVisual)
-							.frame(height: 20)
-							.background(barData[index].color)
-					}
-				}.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-				
-				VStack(spacing: 3.0)
-				{
-					ForEach(barData.indices, id: \.self)
+						ForEach(barData.indices, id: \.self)
+						{
+							index in
+							Text(barData[index].sizeVisual)
+								.frame(height: 20)
+								.background(barData[index].color)
+						}
+					}.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+					
+					VStack(spacing: 3.0)
 					{
-						index in
-						Text(String(barData[index].sizeNumerical))
-							.frame(height: 20)
-							.padding(.trailing, 5.0)
-					}
-				}.frame(width: 35.0, alignment: .center)
-			}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+						ForEach(barData.indices, id: \.self)
+						{
+							index in
+							Text(String(barData[index].sizeNumerical))
+								.frame(height: 20)
+								.padding(.trailing, 5.0)
+						}
+					}.frame(width: 35.0, alignment: .center)
+				}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
 		}
     }
 	
@@ -148,7 +147,7 @@ struct BarDataView: View
 				}
 			}
 		}
-		else if (operation == "addBar")
+		else if (operation == "addBar" && barData.count < 25)
 		{
 			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false))
 		}
@@ -159,6 +158,7 @@ struct BarDataView: View
 		else if (operation == "randomData")
 		{
 			barData.removeAll()
+			
 			let randomRowCount = Int.random(in: 5..<25)
 			var counter = 0
 			while (counter < randomRowCount)
