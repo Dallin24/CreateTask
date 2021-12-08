@@ -23,25 +23,23 @@ struct BarDataView: View
 		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false),
 		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false)
 	]
+	@State private var hasSortedBeenClicked : Bool = false
 	
     var body: some View
 	{
 
 		VStack
 		{
-			HStack(spacing: 2.0)
-			{
-				Button(action: { sortData() }, label: { Text("Sort Data") })
-					.frame(width: 90, height: 25)
-					.background(Color(.systemGray3))
-					.foregroundColor(.black)
-					.font(.system(size: 18.0))
-					.cornerRadius(5)
-			}
+			Button(action: { sortData() }, label: { Text("Sort Data") })
+				.frame(width: 90, height: 25)
+				.background(Color(.systemGray3))
+				.foregroundColor(.black)
+				.font(.system(size: 18.0))
+				.cornerRadius(5)
 			
 			HStack(spacing: 2.0)
 			{
-				Button(action: { changeBarDataInfo(id: -1, operation: "addBar") }, label: { Image(systemName: "plus") })
+				Button(action: { changeOverallBarDataInfo(operation: "addBar") }, label: { Image(systemName: "plus") })
 					.frame(width: 25, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -49,14 +47,14 @@ struct BarDataView: View
 					.cornerRadius(5)
 					.padding(.leading, 10.0)
 				
-				Button(action: { changeBarDataInfo(id: -1, operation: "removeBar") }, label: { Image(systemName: "minus") })
+				Button(action: { changeOverallBarDataInfo(operation: "removeBar") }, label: { Image(systemName: "minus") })
 					.frame(width: 25, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
 				
-				Button(action: { changeBarDataInfo(id: -1, operation: "randomData") }, label: { Text("Generate Random Data") })
+				Button(action: { changeOverallBarDataInfo(operation: "randomData") }, label: { Text("Generate Random Data") })
 					.frame(width: 200, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -64,6 +62,11 @@ struct BarDataView: View
 					.cornerRadius(5)
 				
 			}.frame(minWidth: 0, maxWidth: .infinity)
+			
+			VStack(alignment: .center)
+			{
+				TextField("Enter Title Here", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/).multilineTextAlignment(.center)
+			}
 				HStack
 				{
 					VStack(alignment: .leading, spacing: 3.0)
@@ -73,14 +76,20 @@ struct BarDataView: View
 							index in
 							HStack(spacing: 2.0)
 							{
-								Button(action: { changeBarDataInfo(id: index, operation: "addDataPoint") }, label: { Image(systemName: "plus") })
+								Button(action: { changeIndividualBarDataInfo(id: index, operation: "changeColor") }, label: { Text("ℂ") })
 									.frame(width: 20, height: 20)
 									.background(Color(.systemGray3))
 									.foregroundColor(.black)
 									.cornerRadius(5)
 									.padding(.leading, 10.0)
 								
-								Button(action: { changeBarDataInfo(id: index, operation: "removeDataPoint") }, label: { Image(systemName: "minus") })
+								Button(action: { changeIndividualBarDataInfo(id: index, operation: "addDataPoint") }, label: { Image(systemName: "plus") })
+									.frame(width: 20, height: 20)
+									.background(Color(.systemGray3))
+									.foregroundColor(.black)
+									.cornerRadius(5)
+								
+								Button(action: { changeIndividualBarDataInfo(id: index, operation: "removeDataPoint") }, label: { Image(systemName: "minus") })
 									.frame(width: 20, height: 20)
 									.background(Color(.systemGray3))
 									.foregroundColor(.black)
@@ -114,7 +123,7 @@ struct BarDataView: View
 		}
     }
 	
-	func changeBarDataInfo(id : Int, operation : String) -> Void
+	func changeIndividualBarDataInfo(id : Int, operation : String) -> Void
 	{
 		if (operation == "addDataPoint")
 		{
@@ -139,7 +148,11 @@ struct BarDataView: View
 				}
 			}
 		}
-		else if (operation == "addBar" && barData.count < 25)
+	}
+	
+	func changeOverallBarDataInfo(operation : String) -> Void
+	{
+		if (operation == "addBar" && barData.count < 25)
 		{
 			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false))
 		}
@@ -161,7 +174,7 @@ struct BarDataView: View
 			
 			for index in 0...(barData.count - 1)
 			{
-				barData[index].sizeNumerical = Int.random(in: 0..<31)
+				barData[index].sizeNumerical = Int.random(in: 0..<29)
 			}
 			updateSizeVisual()
 		}
@@ -184,21 +197,43 @@ struct BarDataView: View
 	
 	func sortData() -> Void
 	{
-		var end = 0
-		for _ in barData
+		if (hasSortedBeenClicked)
 		{
-			
-			for index in 0..<(barData.count - 1 - end)
+			var end = 0
+			for _ in barData
 			{
-				if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
+				
+				for index in 0..<(barData.count - 1 - end)
 				{
-					let temp = barData[index]
-					barData[index] = barData[index + 1]
-					barData[index + 1] = temp
+					if (barData[index].sizeNumerical < barData[index + 1].sizeNumerical)
+					{
+						let temp = barData[index]
+						barData[index] = barData[index + 1]
+						barData[index + 1] = temp
+					}
 				}
+				end += 1
 			}
-			end += 1
-			
+			hasSortedBeenClicked = false
+		}
+		else
+		{
+			var end = 0
+			for _ in barData
+			{
+				
+				for index in 0..<(barData.count - 1 - end)
+				{
+					if (barData[index].sizeNumerical > barData[index + 1].sizeNumerical)
+					{
+						let temp = barData[index]
+						barData[index] = barData[index + 1]
+						barData[index + 1] = temp
+					}
+				}
+				end += 1
+			}
+			hasSortedBeenClicked = true
 		}
 	}
 }
