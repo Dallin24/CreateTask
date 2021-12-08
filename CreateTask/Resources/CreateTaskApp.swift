@@ -2,15 +2,18 @@
 //  CreateTaskApp.swift
 //  CreateTask
 //
-//  Created by [REDACTED] on 10/8/21.
+//  Created by [REDACTED] on [REDACTED].
 //
 
 import SwiftUI
 
 @main
-struct CreateTaskApp: App {
-    var body: some Scene {
-        WindowGroup {
+struct CreateTaskApp: App
+{
+    var body: some Scene
+	{
+        WindowGroup
+		{
             BarDataView()
         }
     }

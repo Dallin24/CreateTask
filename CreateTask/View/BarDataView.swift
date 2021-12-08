@@ -2,7 +2,7 @@
 //  BarDataView.swift
 //  CreateTask
 //
-//  Created by [REDACTED] on 11/9/21.
+//  Created by [REDACTED] on [REDACTED].
 //
 
 import SwiftUI
@@ -23,8 +23,6 @@ struct BarDataView: View
 		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false),
 		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false)
 	]
-	@State private var freezeButtons : Bool = false
-	@State private var buttonOpacity : Double = 1.0
 	
     var body: some View
 	{
@@ -50,7 +48,6 @@ struct BarDataView: View
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
 					.padding(.leading, 10.0)
-					.opacity(buttonOpacity)
 				
 				Button(action: { changeBarDataInfo(id: -1, operation: "removeBar") }, label: { Image(systemName: "minus") })
 					.frame(width: 25, height: 25)
@@ -58,14 +55,13 @@ struct BarDataView: View
 					.foregroundColor(.black)
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
-					.opacity(buttonOpacity)
+				
 				Button(action: { changeBarDataInfo(id: -1, operation: "randomData") }, label: { Text("Generate Random Data") })
 					.frame(width: 200, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
 					.font(.system(size: 18.0))
 					.cornerRadius(5)
-					.opacity(buttonOpacity)
 				
 			}.frame(minWidth: 0, maxWidth: .infinity)
 				HStack
@@ -83,14 +79,12 @@ struct BarDataView: View
 									.foregroundColor(.black)
 									.cornerRadius(5)
 									.padding(.leading, 10.0)
-									.opacity(buttonOpacity)
 								
 								Button(action: { changeBarDataInfo(id: index, operation: "removeDataPoint") }, label: { Image(systemName: "minus") })
 									.frame(width: 20, height: 20)
 									.background(Color(.systemGray3))
 									.foregroundColor(.black)
 									.cornerRadius(5)
-									.opacity(buttonOpacity)
 							}
 						}
 					}
@@ -122,8 +116,6 @@ struct BarDataView: View
 	
 	func changeBarDataInfo(id : Int, operation : String) -> Void
 	{
-		if freezeButtons { return }
-		
 		if (operation == "addDataPoint")
 		{
 			barData[id].sizeVisual += "  "
