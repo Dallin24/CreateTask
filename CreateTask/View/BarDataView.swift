@@ -11,18 +11,20 @@ struct BarDataInfo
 {
 	var sizeVisual : String
 	var sizeNumerical : Int
-	var color : Color
-	var sorted : Bool
+	var colorVisual : Color
+	var colorNumerical : Int
 }
 
 struct BarDataView: View
 {
 	@State private var barData : [BarDataInfo] =
 	[
-		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false),
-		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false),
-		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false)
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, colorVisual: .blue, colorNumerical: 4),
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, colorVisual: .blue, colorNumerical: 4),
+		BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, colorVisual: .blue, colorNumerical: 4)
 	]
+	@State private var barDataColors : [Color] = [.red, .orange, .yellow, .green, .blue, .purple]
+	
 	@State private var hasSortedBeenClicked : Bool = false
 	
     var body: some View
@@ -30,12 +32,22 @@ struct BarDataView: View
 
 		VStack
 		{
-			Button(action: { sortData() }, label: { Text("Sort Data") })
-				.frame(width: 90, height: 25)
-				.background(Color(.systemGray3))
-				.foregroundColor(.black)
-				.font(.system(size: 18.0))
-				.cornerRadius(5)
+			HStack
+			{
+				Button(action: { sortData() }, label: { Text("Sort Data") })
+					.frame(width: 90, height: 25)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.font(.system(size: 18.0))
+					.cornerRadius(5)
+				
+				Button(action: { changeOverallBarDataInfo(operation: "randomColor") }, label: { Text("Randomize Color Data") })
+					.frame(width: 190, height: 25)
+					.background(Color(.systemGray3))
+					.foregroundColor(.black)
+					.font(.system(size: 18.0))
+					.cornerRadius(5)
+			}
 			
 			HStack(spacing: 2.0)
 			{
@@ -54,12 +66,13 @@ struct BarDataView: View
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
 				
-				Button(action: { changeOverallBarDataInfo(operation: "randomData") }, label: { Text("Generate Random Data") })
-					.frame(width: 200, height: 25)
+				Button(action: { changeOverallBarDataInfo(operation: "randomData") }, label: { Text("Randomize Data") })
+					.frame(width: 150, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
 					.font(.system(size: 18.0))
 					.cornerRadius(5)
+					.padding(.leading, 6.0)
 				
 			}.frame(minWidth: 0, maxWidth: .infinity)
 			
@@ -105,7 +118,7 @@ struct BarDataView: View
 							index in
 							Text(barData[index].sizeVisual)
 								.frame(height: 20)
-								.background(barData[index].color)
+								.background(barData[index].colorVisual)
 						}
 					}.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 					
@@ -148,13 +161,29 @@ struct BarDataView: View
 				}
 			}
 		}
+		else if (operation == "changeColor")
+		{
+			var currentColor = barData[id].colorNumerical
+			
+			if (currentColor > barDataColors.count - 2)
+			{
+				currentColor = 0
+			}
+			else
+			{
+				currentColor += 1
+			}
+			
+			barData[id].colorNumerical = currentColor
+			barData[id].colorVisual = barDataColors[currentColor]
+		}
 	}
 	
 	func changeOverallBarDataInfo(operation : String) -> Void
 	{
 		if (operation == "addBar" && barData.count < 25)
 		{
-			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false))
+			barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, colorVisual: .blue, colorNumerical: 4))
 		}
 		else if (operation == "removeBar" && barData.count > 1)
 		{
@@ -168,7 +197,7 @@ struct BarDataView: View
 			var counter = 0
 			while (counter < randomRowCount)
 			{
-				barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, color: .blue, sorted: false))
+				barData.append(BarDataInfo(sizeVisual: "  ", sizeNumerical: 0, colorVisual: .blue, colorNumerical: 4))
 				counter += 1
 			}
 			
@@ -176,21 +205,27 @@ struct BarDataView: View
 			{
 				barData[index].sizeNumerical = Int.random(in: 0..<29)
 			}
-			updateSizeVisual()
-		}
-	}
-	
-	func updateSizeVisual() -> Void
-	{
-		for index in 0...(barData.count - 1)
-		{
-			barData[index].sizeVisual = "  "
 			
-			var segments = 0
-			while (segments < barData[index].sizeNumerical)
+			for index in 0...(barData.count - 1)
 			{
-			barData[index].sizeVisual += "  "
-			segments += 1
+				barData[index].sizeVisual = "  "
+				
+				var segments = 0
+				while (segments < barData[index].sizeNumerical)
+				{
+					barData[index].sizeVisual += "  "
+					segments += 1
+				}
+			}
+		}
+		else if (operation == "randomColor")
+		{
+			for index in 0...(barData.count - 1)
+			{
+				let randColorNumber = Int.random(in: 0..<barDataColors.count)
+				
+				barData[index].colorNumerical = randColorNumber
+				barData[index].colorVisual = barDataColors[randColorNumber]
 			}
 		}
 	}
