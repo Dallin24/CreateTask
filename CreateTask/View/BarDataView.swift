@@ -41,7 +41,7 @@ struct BarDataView: View
 					.font(.system(size: 18.0))
 					.cornerRadius(5)
 				
-				Button(action: { changeOverallBarDataInfo(operation: "randomColor") }, label: { Text("Randomize Color Data") })
+				Button(action: { randomizeData(operation: "randomColor") }, label: { Text("Randomize Color Data") })
 					.frame(width: 190, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -66,7 +66,7 @@ struct BarDataView: View
 					.font(.system(size: 22.0))
 					.cornerRadius(5)
 				
-				Button(action: { changeOverallBarDataInfo(operation: "randomData") }, label: { Text("Randomize Data") })
+				Button(action: { randomizeData(operation: "randomData") }, label: { Text("Randomize Data") })
 					.frame(width: 150, height: 25)
 					.background(Color(.systemGray3))
 					.foregroundColor(.black)
@@ -189,7 +189,11 @@ struct BarDataView: View
 		{
 			barData.remove(at: barData.count - 1)
 		}
-		else if (operation == "randomData")
+	}
+	
+	func randomizeData(operation : String) -> Void
+	{
+		if (operation == "randomData")
 		{
 			barData.removeAll()
 			
